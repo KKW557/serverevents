@@ -9,8 +9,8 @@
   ],
   "contact": {
     "homepage": "https://modrinth.com/mod/serverevents",
-    "sources": "https://github.com/sucj/ServerEvents",
-    "issues": "https://github.com/sucj/ServerEvents/issues"
+    "sources": "https://github.com/sucj/serverevents",
+    "issues": "https://github.com/sucj/serverevents/issues"
   },
   "license": "MIT",
   "icon": "pack.png",
