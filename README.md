@@ -1,15 +1,28 @@
-# ServerEvents
+# Server Events
 
-**ServerEvents** is a support library for Fabric server development, designed to enhance the Fabric API's limited event system. It offers a Bukkit-like event framework while adhering to Fabric's minimalist philosophy.
+[![GitHub License](https://img.shields.io/github/license/sucj/serverevents)](https://github.com/sucj/serverevents?tab=MIT-1-ov-file#readme)
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/sucj/serverevents/build.yml)](https://github.com/sucj/serverevents/actions/workflows/build.yml)
+[![GitHub Release](https://img.shields.io/github/v/release/sucj/serverevents)](https://github.com/sucj/serverevents/releases/latest)
 
-- [Javadoc](https://sucj.github.io/ServerEvents/2025.12.1/)
-- [Modrinth](https://modrinth.com/mod/serverevents)
+[![Modrinth Downloads](https://img.shields.io/modrinth/dt/serverevents?logo=modrinth)](https://modrinth.com/mod/serverevents)
+
+**Server Events** is a support library for Fabric server development, designed to enhance the Fabric API's limited event system. It offers a Bukkit-like event framework while adhering to Fabric's minimalist philosophy.
 
 The mod doesn't wrap `CommandRegistrationCallback` and `DynamicRegistrySetupCallback` from Fabric API.
 
 ## Installation
-1. Import this package to your project, more information at [jitpack.io](https://jitpack.io/#icu.suc/serverevents).
+1. Import this package to your project.
 2. Add `serverevents` to your mod depends.
+
+```groovy
+repositories {
+    maven "https://mvn.suc.icu"
+}
+
+dependencies {
+    implementation "icu.suc:serverevents:<version>"
+}
+```
 
 ## Usage
 **ServerEvents** provides a simple API for registering and processing events.
@@ -35,4 +48,4 @@ public class ExampleMod implements ModInitializer {
 
 ## License
 
-This project is licensed under the [MIT License](/LICENSE.txt) © 2025 sucj.
+This project is licensed under the [MIT License](LICENSE) © 2025 sucj.
