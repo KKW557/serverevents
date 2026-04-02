@@ -90,7 +90,6 @@ public final class ServerEvents {
         }
     }
 
-
     public static final class Player {
         private Player() {}
 

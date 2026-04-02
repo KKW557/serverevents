@@ -39,8 +39,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ServerCommonPacketListenerImpl.class)
 public abstract class MixinServerCommonPacketListenerImpl {
-    @Shadow @Final protected MinecraftServer server;
-
     @ModifyArg(method = "disconnect(Lnet/minecraft/network/chat/Component;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/DisconnectionDetails;<init>(Lnet/minecraft/network/chat/Component;)V"), index = 0)
     private Component Player$Kick$MODIFY_REASON(Component component) {
         if ((Object) this instanceof ServerGamePacketListenerImpl serverGamePacketListener) {
