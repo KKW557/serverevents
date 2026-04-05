@@ -24,6 +24,8 @@ dependencies {
 }
 ```
 
+Since `2.0.0`, the **groupId** has been changed from `icu.suc` to `icu.suc.mc`.
+
 ## Usage
 **ServerEvents** provides a simple API for registering and processing events.
 
