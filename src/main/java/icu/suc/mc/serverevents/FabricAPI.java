@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package icu.suc.serverevents;
+package icu.suc.mc.serverevents;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;

@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package icu.suc.serverevents.mixin;
+package icu.suc.mc.serverevents.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import icu.suc.serverevents.ServerEvents;
+import icu.suc.mc.serverevents.ServerEvents;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.network.Connection;
