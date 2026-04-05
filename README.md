@@ -2,7 +2,7 @@
 
 [![GitHub License](https://img.shields.io/github/license/sucj/serverevents)](https://github.com/sucj/serverevents?tab=MIT-1-ov-file#readme)
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/sucj/serverevents/build.yml)](https://github.com/sucj/serverevents/actions/workflows/build.yml)
-[![GitHub Release](https://img.shields.io/github/v/release/sucj/serverevents)](https://github.com/sucj/serverevents/releases/latest)
+[![GitHub Release](https://img.shields.io/github/v/release/sucj/serverevents?include_prereleases)](https://github.com/sucj/serverevents/releases/latest)
 
 [![Modrinth Downloads](https://img.shields.io/modrinth/dt/serverevents?logo=modrinth)](https://modrinth.com/mod/serverevents)
 
