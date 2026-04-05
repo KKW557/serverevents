@@ -36,20 +36,30 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ServerCommonPacketListenerImpl.class)
 public abstract class MixinServerCommonPacketListenerImpl {
+    /**
+     * @see ServerEvents.Player.Kick#MODIFY_REASON
+     */
     @ModifyArg(method = "disconnect(Lnet/minecraft/network/chat/Component;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/DisconnectionDetails;<init>(Lnet/minecraft/network/chat/Component;)V"), index = 0)
-    private Component Player$Kick$MODIFY_REASON(Component component) {
-        if ((Object) this instanceof ServerGamePacketListenerImpl serverGamePacketListener) {
-            return ServerEvents.Player.Kick.MODIFY_REASON.invoker().modifyKickReason(serverGamePacketListener.player, component);
+    private Component serverevents$Player$Kick$MODIFY_REASON(Component component) {
+        var self = (Object) this;
+        if (self instanceof ServerGamePacketListenerImpl serverGamePacketListener) {
+            var player = serverGamePacketListener.player;
+            return ServerEvents.Player.Kick.MODIFY_REASON.invoker().modifyKickReason(player, component);
         }
         return component;
     }
 
+    /**
+     * @see ServerEvents.Player.Kick#ALLOW
+     */
     @Inject(method = "disconnect(Lnet/minecraft/network/DisconnectionDetails;)V", at = @At("HEAD"), cancellable = true)
-    private void Player$Kick$ALLOW(DisconnectionDetails disconnectionDetails, CallbackInfo ci) {
-        if ((Object) this instanceof ServerGamePacketListenerImpl serverGamePacketListener) {
-            if (ServerEvents.Player.Kick.ALLOW.invoker().allowKick(serverGamePacketListener.player, disconnectionDetails.reason())) {
-                return;
-            }
+    private void serverevents$Player$Kick$ALLOW(DisconnectionDetails disconnectionDetails, CallbackInfo ci) {
+        var self = (Object) this;
+        if (self instanceof ServerGamePacketListenerImpl serverGamePacketListener) {
+            var player = serverGamePacketListener.player;
+            var component = disconnectionDetails.reason();
+            boolean bool = ServerEvents.Player.Kick.ALLOW.invoker().allowKick(player, component);
+            if (bool) return;
             ci.cancel();
         }
     }
