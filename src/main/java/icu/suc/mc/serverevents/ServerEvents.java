@@ -132,7 +132,7 @@ public final class ServerEvents {
         });
 
         /**
-         * An event that allows the player drop the selected item.
+         * An event that allows the player to drop the selected item.
          */
         public static final Event<ServerEvents.Player.AllowDropSelectedItem> ALLOW_DROP_SELECTED_ITEM = EventFactory.createArrayBacked(ServerEvents.Player.AllowDropSelectedItem.class, callbacks -> (player, all) -> {
             for (ServerEvents.Player.AllowDropSelectedItem callback : callbacks) {
@@ -171,7 +171,7 @@ public final class ServerEvents {
              * Modifies or provides a message for a player left.
              *
              * @param player the player
-             * @param message the leave message
+             * @param message the leaving message
              * @return the new leave message
              */
             @NotNull Component modifyLeaveMessage(@NotNull ServerPlayer player, @NotNull Component message);
@@ -180,7 +180,7 @@ public final class ServerEvents {
         @FunctionalInterface
         public interface AllowDropSelectedItem {
             /**
-             * Called when the player drop the selected item.
+             * Called when the player drops the selected item.
              *
              * @param player the player
              * @param all whether to drop all items
@@ -270,7 +270,7 @@ public final class ServerEvents {
                  * Modifies or provides a message for a player left.
                  *
                  * @param player the player
-                 * @param message the leave message
+                 * @param message the leaving message
                  * @return the new leave message
                  */
                 @NotNull Component modifyLeaveMessage(@NotNull ServerPlayer player, @NotNull Component message);
