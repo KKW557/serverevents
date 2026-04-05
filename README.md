@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-    implementation "icu.suc:serverevents:<version>"
+    implementation "icu.suc.mc:serverevents:<version>"
 }
 ```
 
