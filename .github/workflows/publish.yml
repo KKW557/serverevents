@@ -27,13 +27,13 @@ jobs:
       - name: Gradle Publish
         run: ./gradlew publish
 
-      - uses: actions/checkout@v5
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          repository: sucj/maven-publish
-          token: ${{ secrets.MAVEN_TOKEN }}
-          path: ./.github/actions/publish
-      - name: Publish
-        uses: ./.github/actions/publish
-        with:
-          token: ${{ secrets.MAVEN_TOKEN }}
-          
+          personal_token: ${{ secrets.MAVEN_TOKEN }}
+          external_repository: sucj/.m2
+          publish_branch: repository
+          publish_dir: ./build/repository
+          keep_files: true
+          destination_dir: public
+          exclude_assets: '**/maven-metadata.xml,**/maven-metadata.xml.*'
