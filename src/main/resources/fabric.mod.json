@@ -15,6 +15,11 @@
   "license": "MIT",
   "icon": "pack.png",
   "environment": "*",
+  "entrypoints": {
+    "main": [
+      "icu.suc.mc.serverevents.internal.Main"
+    ]
+  },
   "mixins": [
     "serverevents.mixins.json"
   ],
