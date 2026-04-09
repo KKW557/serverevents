@@ -48,7 +48,7 @@ import java.util.Map;
 
 @Mixin(LivingEntity.class)
 public abstract class MixinLivingEntity {
-    @Shadow protected abstract void onEffectsRemoved(Collection<MobEffectInstance> collection);
+    @Shadow protected abstract void onEffectsRemoved(Collection<MobEffectInstance> effects);
 
     @Shadow @Final private Map<Holder<MobEffect>, MobEffectInstance> activeEffects;
 
