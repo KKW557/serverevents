@@ -26,6 +26,6 @@
   "depends": {
     "fabricloader": ">=${loader}",
     "fabric": "*",
-    "minecraft": "^${minecraft}"
+    "minecraft": ">=${minecraft}"
   }
 }
