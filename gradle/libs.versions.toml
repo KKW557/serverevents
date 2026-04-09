@@ -1,8 +1,8 @@
 [versions]
-minecraft = "1.21.11"
-fabric-loom = "1.15-SNAPSHOT"
-fabric-loader = "0.17.3"
-fabric-api = "0.139.5+1.21.11"
+minecraft = "26.1"
+fabric-loom = "1.14-SNAPSHOT"
+fabric-loader = "0.18.3"
+fabric-api = "0.144.0+26.1"
 
 [libraries]
 minecraft = { group = "com.mojang", name = "minecraft", version.ref = "minecraft" }
@@ -10,4 +10,4 @@ fabric-loader = { group = "net.fabricmc", name = "fabric-loader", version.ref = 
 fabric-api = { group = "net.fabricmc.fabric-api", name = "fabric-api", version.ref = "fabric-api" }
 
 [plugins]
-fabric-loom = { id = "fabric-loom", version.ref = "fabric-loom" }
+fabric-loom = { id = "net.fabricmc.fabric-loom", version.ref = "fabric-loom" }

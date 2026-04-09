@@ -53,11 +53,11 @@ public abstract class MixinServerCommonPacketListenerImpl {
      * @see ServerEvents.Player.Kick#ALLOW
      */
     @Inject(method = "disconnect(Lnet/minecraft/network/DisconnectionDetails;)V", at = @At("HEAD"), cancellable = true)
-    private void serverevents$Player$Kick$ALLOW(DisconnectionDetails disconnectionDetails, CallbackInfo ci) {
+    private void serverevents$Player$Kick$ALLOW(DisconnectionDetails details, CallbackInfo ci) {
         var self = (Object) this;
         if (self instanceof ServerGamePacketListenerImpl serverGamePacketListener) {
             var player = serverGamePacketListener.player;
-            var component = disconnectionDetails.reason();
+            var component = details.reason();
             boolean bool = ServerEvents.Player.Kick.ALLOW.invoker().allowKick(player, component);
             if (bool) return;
             ci.cancel();

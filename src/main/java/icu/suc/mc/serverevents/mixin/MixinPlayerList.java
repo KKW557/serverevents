@@ -48,10 +48,10 @@ public abstract class MixinPlayerList {
      * @see ServerEvents.Player.Join#ALLOW_MESSAGE
      */
     @Redirect(method = "placeNewPlayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/players/PlayerList;broadcastSystemMessage(Lnet/minecraft/network/chat/Component;Z)V"))
-    private void serverevents$Player$Join$ALLOW_MESSAGE(PlayerList instance, Component component, boolean bl, @Local(argsOnly = true) ServerPlayer serverPlayer) {
-        boolean bool = ServerEvents.Player.Join.ALLOW_MESSAGE.invoker().allowJoinMessage(serverPlayer, component);
+    private void serverevents$Player$Join$ALLOW_MESSAGE(PlayerList instance, Component message, boolean overlay, @Local(argsOnly = true) ServerPlayer serverPlayer) {
+        boolean bool = ServerEvents.Player.Join.ALLOW_MESSAGE.invoker().allowJoinMessage(serverPlayer, message);
         if (bool) {
-            instance.broadcastSystemMessage(component, bl);
+            instance.broadcastSystemMessage(message, overlay);
         }
     }
 }

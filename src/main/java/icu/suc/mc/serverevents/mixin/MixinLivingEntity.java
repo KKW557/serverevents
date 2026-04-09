@@ -48,7 +48,7 @@ import java.util.Map;
 
 @Mixin(LivingEntity.class)
 public abstract class MixinLivingEntity {
-    @Shadow protected abstract void onEffectsRemoved(Collection<MobEffectInstance> collection);
+    @Shadow protected abstract void onEffectsRemoved(Collection<MobEffectInstance> effects);
 
     @Shadow @Final private Map<Holder<MobEffect>, MobEffectInstance> activeEffects;
 
@@ -56,9 +56,9 @@ public abstract class MixinLivingEntity {
      * @see ServerEvents.LivingEntity.Effect#ADD
      */
     @Inject(method = "addEffect(Lnet/minecraft/world/effect/MobEffectInstance;Lnet/minecraft/world/entity/Entity;)Z", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;canBeAffected(Lnet/minecraft/world/effect/MobEffectInstance;)Z", shift = At.Shift.AFTER), cancellable = true)
-    private void serverevents$LivingEntity$Effect$ADD(MobEffectInstance mobEffectInstance, Entity entity, @NotNull CallbackInfoReturnable<Boolean> cir) {
+    private void serverevents$LivingEntity$Effect$ADD(MobEffectInstance newEffect, Entity source, @NotNull CallbackInfoReturnable<Boolean> cir) {
         var self = (LivingEntity) (Object) this;
-        boolean bool = ServerEvents.LivingEntity.Effect.ADD.invoker().addEffect(self, mobEffectInstance, entity);
+        boolean bool = ServerEvents.LivingEntity.Effect.ADD.invoker().addEffect(self, newEffect, source);
         if (bool) return;
         cir.setReturnValue(false);
     }
@@ -67,19 +67,19 @@ public abstract class MixinLivingEntity {
      * @see ServerEvents.LivingEntity.Effect#OVERRIDE
      */
     @Redirect(method = "addEffect(Lnet/minecraft/world/effect/MobEffectInstance;Lnet/minecraft/world/entity/Entity;)Z", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/effect/MobEffectInstance;update(Lnet/minecraft/world/effect/MobEffectInstance;)Z"))
-    private boolean serverevents$LivingEntity$Effect$OVERRIDE(@NotNull MobEffectInstance instance, MobEffectInstance mobEffectInstance, @Local(argsOnly = true) Entity entity) {
+    private boolean serverevents$LivingEntity$Effect$OVERRIDE(@NotNull MobEffectInstance instance, MobEffectInstance takeOver, @Local(argsOnly = true) Entity entity) {
         var self = (LivingEntity) (Object) this;
-        boolean updated = instance.update(mobEffectInstance);
-        return ServerEvents.LivingEntity.Effect.OVERRIDE.invoker().overrideEffect(self, instance, mobEffectInstance, entity, updated);
+        boolean updated = instance.update(takeOver);
+        return ServerEvents.LivingEntity.Effect.OVERRIDE.invoker().overrideEffect(self, instance, takeOver, entity, updated);
     }
 
     /**
      * @see ServerEvents.LivingEntity.Effect#REMOVE
      */
     @Redirect(method = "tickEffects", at = @At(value = "INVOKE", target = "Ljava/util/Iterator;remove()V"))
-    private void serverevents$LivingEntity$Effect$REMOVE(@NotNull Iterator<Holder<MobEffectInstance>> instance, @Local MobEffectInstance mobEffectInstance) {
+    private void serverevents$LivingEntity$Effect$REMOVE(@NotNull Iterator<Holder<MobEffectInstance>> instance, @Local(name = "effect") MobEffectInstance effect) {
         var self = (LivingEntity) (Object) this;
-        ServerEvents.LivingEntity.Effect.REMOVE.invoker().removeEffect(self, mobEffectInstance);
+        ServerEvents.LivingEntity.Effect.REMOVE.invoker().removeEffect(self, effect);
         instance.remove();
     }
 
@@ -87,10 +87,10 @@ public abstract class MixinLivingEntity {
      * @see ServerEvents.LivingEntity.Effect#REMOVE
      */
     @Redirect(method = "tickEffects", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;onEffectsRemoved(Ljava/util/Collection;)V"))
-    private void serverevents$LivingEntity$Effect$REMOVE(LivingEntity instance, Collection<MobEffectInstance> collection, @Local MobEffectInstance mobEffectInstance) {
-        boolean bool = ServerEvents.LivingEntity.Effect.REMOVE.invoker().removeEffect(instance, mobEffectInstance);
+    private void serverevents$LivingEntity$Effect$REMOVE(LivingEntity instance, Collection<MobEffectInstance> effects, @Local(name = "effect") MobEffectInstance effect) {
+        boolean bool = ServerEvents.LivingEntity.Effect.REMOVE.invoker().removeEffect(instance, effect);
         if (bool) {
-            onEffectsRemoved(collection);
+            onEffectsRemoved(effects);
         }
     }
 
@@ -98,14 +98,14 @@ public abstract class MixinLivingEntity {
      * @see ServerEvents.LivingEntity.Effect#REMOVE
      */
     @Inject(method = "triggerOnDeathMobEffects", at = @At("HEAD"), cancellable = true)
-    private void serverevents$LivingEntity$Effect$REMOVE(ServerLevel serverLevel, Entity.RemovalReason removalReason, CallbackInfo ci) {
+    private void serverevents$LivingEntity$Effect$REMOVE(ServerLevel level, Entity.RemovalReason reason, CallbackInfo ci) {
         var iterator = this.activeEffects.entrySet().iterator();
         var self = (LivingEntity) (Object) this;
         while (iterator.hasNext()) {
             var effect = iterator.next().getValue();
             boolean bool = ServerEvents.LivingEntity.Effect.REMOVE.invoker().removeEffect(self, effect);
             if (bool) {
-                effect.onMobRemoved(serverLevel, self, removalReason);
+                effect.onMobRemoved(level, self, reason);
                 iterator.remove();
             }
         }
@@ -136,12 +136,12 @@ public abstract class MixinLivingEntity {
      * @see ServerEvents.LivingEntity.Effect#REMOVE
      */
     @Inject(method = "removeEffectNoUpdate", at = @At("HEAD"), cancellable = true)
-    private void serverevents$LivingEntity$Effect$REMOVE(Holder<MobEffect> holder, CallbackInfoReturnable<MobEffectInstance> cir) {
+    private void serverevents$LivingEntity$Effect$REMOVE(Holder<MobEffect> effect, CallbackInfoReturnable<MobEffectInstance> cir) {
         var self = (LivingEntity) (Object) this;
-        var effect = this.activeEffects.get(holder);
-        boolean bool = ServerEvents.LivingEntity.Effect.REMOVE.invoker().removeEffect(self, effect);
+        var activeEffect = this.activeEffects.get(effect);
+        boolean bool = ServerEvents.LivingEntity.Effect.REMOVE.invoker().removeEffect(self, activeEffect);
         if (bool) {
-            var removed = this.activeEffects.remove(holder);
+            var removed = this.activeEffects.remove(effect);
             cir.setReturnValue(removed);
             return;
         }

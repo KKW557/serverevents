@@ -5,15 +5,14 @@ plugins {
 
 val minecraft = libs.versions.minecraft.get()
 
-val targetJavaVersion = 21
+val targetJavaVersion = 25
 
 version = "${project.version}+${minecraft}"
 
 dependencies {
     minecraft(libs.minecraft)
-    mappings(loom.officialMojangMappings())
-    modImplementation(libs.fabric.loader)
-    modImplementation(libs.fabric.api)
+    implementation(libs.fabric.loader)
+    implementation(libs.fabric.api)
 }
 
 loom {
