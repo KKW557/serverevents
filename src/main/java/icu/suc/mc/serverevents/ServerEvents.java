@@ -52,6 +52,11 @@ public final class ServerEvents {
     }
 
     /**
+     * The identifier of this mod.
+     */
+    public static final String ID = "serverevents";
+
+    /**
      * Registers the given listener to one or more events using the default phase.
      *
      * <p>The {@code listener} object must implement the interface or class represented
