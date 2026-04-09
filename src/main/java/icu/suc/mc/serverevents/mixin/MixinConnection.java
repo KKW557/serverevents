@@ -47,7 +47,7 @@ public abstract class MixinConnection {
      * @see ServerEvents.Connection.Receive#MODIFY
      */
     @ModifyVariable(method = "channelRead0(Lio/netty/channel/ChannelHandlerContext;Lnet/minecraft/network/protocol/Packet;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/PacketListener;shouldHandleMessage(Lnet/minecraft/network/protocol/Packet;)Z"), argsOnly = true)
-    private @NotNull Packet<?> serverevents$Connection$Receive$MODIFY(Packet<?> packet, @Local PacketListener packetListener) {
+    private @NotNull Packet<?> serverevents$Connection$Receive$MODIFY(Packet<?> packet, @Local(name = "packetListener") PacketListener packetListener) {
         return ServerEvents.Connection.Receive.MODIFY.invoker().modifyReceive(packetListener, packet);
     }
 
@@ -55,7 +55,7 @@ public abstract class MixinConnection {
      * @see ServerEvents.Connection.Receive#ALLOW
      */
     @Inject(method = "channelRead0(Lio/netty/channel/ChannelHandlerContext;Lnet/minecraft/network/protocol/Packet;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/PacketListener;shouldHandleMessage(Lnet/minecraft/network/protocol/Packet;)Z"), cancellable = true)
-    private void serverevents$Connection$Receive$ALLOW(ChannelHandlerContext channelHandlerContext, Packet<?> packet, CallbackInfo ci, @Local PacketListener packetListener) {
+    private void serverevents$Connection$Receive$ALLOW(ChannelHandlerContext ctx, Packet<?> packet, CallbackInfo ci, @Local(name = "packetListener") PacketListener packetListener) {
         boolean bool = ServerEvents.Connection.Receive.ALLOW.invoker().allowReceive(packetListener, packet);
         if (bool) return;
         ci.cancel();
@@ -73,7 +73,7 @@ public abstract class MixinConnection {
      * @see ServerEvents.Connection.Send#ALLOW
      */
     @Inject(method = "sendPacket", at = @At("HEAD"), cancellable = true)
-    private void serverevents$Connection$Send$ALLOW(Packet<?> packet, @Nullable ChannelFutureListener channelFutureListener, boolean bl, CallbackInfo ci) {
+    private void serverevents$Connection$Send$ALLOW(Packet<?> packet, @Nullable ChannelFutureListener listener, boolean flush, CallbackInfo ci) {
         boolean bool = ServerEvents.Connection.Send.ALLOW.invoker().allowSend(this.packetListener, packet);
         if (bool) return;
         ci.cancel();
