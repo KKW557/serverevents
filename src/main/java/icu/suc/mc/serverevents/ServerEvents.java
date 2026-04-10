@@ -993,7 +993,17 @@ public final class ServerEvents {
             }
         }
 
+        /**
+         * @deprecated Moved to {@link ServerEvents.Tick.Level}
+         * @since 2.1.0
+         */
+        @Deprecated
         public static final class World {
+            private World() {
+            }
+        }
+
+        public static final class Level {
             /**
              * @see ServerTickEvents#START_LEVEL_TICK
              */
@@ -1005,7 +1015,7 @@ public final class ServerEvents {
             @FabricAPI
             public static final Event<ServerTickEvents.EndLevelTick> END = ServerTickEvents.END_LEVEL_TICK;
 
-            private World() {
+            private Level() {
             }
         }
     }
@@ -1063,7 +1073,17 @@ public final class ServerEvents {
         }
     }
 
+    /**
+     * @deprecated Moved to {@link ServerEvents.Level}
+     * @since 2.1.0
+     */
+    @Deprecated
     public static final class World {
+        private World() {
+        }
+    }
+
+    public static final class Level {
         /**
          * @see ServerLevelEvents#LOAD
          */
@@ -1075,7 +1095,7 @@ public final class ServerEvents {
         @FabricAPI
         public static final Event<ServerLevelEvents.Unload> UNLOAD = ServerLevelEvents.UNLOAD;
 
-        private World() {
+        private Level() {
         }
 
         public static final class Change {
