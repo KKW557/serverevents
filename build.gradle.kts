@@ -25,12 +25,14 @@ tasks.processResources {
     inputs.property("version", project.version)
     inputs.property("minecraft", minecraft)
     inputs.property("loader", libs.versions.fabric.loader.get())
+    inputs.property("api", libs.versions.fabric.api.get())
 
     filesMatching("fabric.mod.json") {
         expand(
             "version" to version,
             "minecraft" to minecraft,
-            "loader" to libs.versions.fabric.loader.get()
+            "loader" to libs.versions.fabric.loader.get(),
+            "api" to libs.versions.fabric.api.get()
         )
     }
 }
