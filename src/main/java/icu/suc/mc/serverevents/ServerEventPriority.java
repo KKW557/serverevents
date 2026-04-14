@@ -27,23 +27,21 @@ import net.fabricmc.fabric.api.event.Event;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.ApiStatus;
 
-/**
- * Provides a legacy event priority abstraction.
- *
- * <p>This class exists primarily for compatibility and developer familiarity,
- * mirroring the conventional event priority model used in older APIs such as
- * Bukkit. It maps human-readable priority levels to {@link Identifier}-based
- * Fabric event phases.</p>
- *
- * <p>The defined priorities are actively applied to events exposed under
- * {@code ServerEvents.*}, where they are used as phase identifiers during
- * event registration and invocation.</p>
- *
- * <p>Outside of {@code ServerEvents.*}, these priorities do not have intrinsic
- * meaning unless explicitly integrated into the event dispatching logic.</p>
- *
- * @since 2.1.0
- */
+/// Provides a legacy event priority abstraction.
+///
+/// This class exists primarily for compatibility and developer familiarity,
+/// mirroring the conventional event priority model used in older APIs such as
+/// Bukkit. It maps human-readable priority levels to [Identifier]-based
+/// Fabric event phases.
+///
+/// The defined priorities are actively applied to events exposed under
+/// `ServerEvents.*`, where they are used as phase identifiers during
+/// event registration and invocation.
+///
+/// Outside of `ServerEvents.*`, these priorities do not have intrinsic
+/// meaning unless explicitly integrated into the event dispatching logic.
+///
+/// @since 2.1.0
 public final class ServerEventPriority {
     @ApiStatus.Internal
     public static final Identifier[] PRIORITIES = new Identifier[6];
@@ -55,38 +53,26 @@ public final class ServerEventPriority {
 
     private ServerEventPriority() {}
 
-    /**
-     * Executed first.
-     */
+    /// Executed first.
     public static final Identifier LOWEST = register(0, Identifier.fromNamespaceAndPath(ServerEvents.ID, "lowest"));
 
-    /**
-     * Executed after {@link #LOWEST}.
-     */
+    /// Executed after [#LOWEST].
     public static final Identifier LOW = register(1, Identifier.fromNamespaceAndPath(ServerEvents.ID, "low"));
 
-    /**
-     * Executed after {@link #LOW}.
-     * Default priority.
-     *
-     * @see Event#DEFAULT_PHASE
-     */
+    /// Executed after [#LOW].
+    /// Default priority.
+    ///
+    /// @see Event#DEFAULT_PHASE
     public static final Identifier NORMAL = register(2, Event.DEFAULT_PHASE);
 
-    /**
-     * Executed after {@link #NORMAL}.
-     */
+    /// Executed after [#NORMAL].
     public static final Identifier HIGH = register(3, Identifier.fromNamespaceAndPath(ServerEvents.ID, "high"));
 
-    /**
-     * Executed after {@link #HIGH}.
-     */
+    /// Executed after [#HIGH].
     public static final Identifier HIGHEST = register(4, Identifier.fromNamespaceAndPath(ServerEvents.ID, "highest"));
 
-    /**
-     * Executed after {@link #HIGHEST}.
-     * For observation only.
-     */
+    /// Executed after [#HIGHEST].
+    /// For observation only.
     public static final Identifier MONITOR = register(5, Identifier.fromNamespaceAndPath(ServerEvents.ID, "monitor"));
 
     public static Identifier getById(int id) {

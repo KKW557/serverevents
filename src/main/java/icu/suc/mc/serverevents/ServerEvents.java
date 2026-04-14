@@ -48,9 +48,7 @@ import org.jetbrains.annotations.Nullable;
 import static net.fabricmc.fabric.api.event.Event.DEFAULT_PHASE;
 
 public final class ServerEvents {
-    /**
-     * The identifier of this mod.
-     */
+    /// The identifier of this mod.
     public static final String ID = "serverevents";
 
     static {
@@ -61,37 +59,33 @@ public final class ServerEvents {
     private ServerEvents() {
     }
 
-    /**
-     * Registers the given listener to one or more events using the default phase.
-     *
-     * <p>The {@code listener} object must implement the interface or class represented
-     * by each {@code event}'s type parameter {@code T}. Passing an incompatible object
-     * will throw a {@link ClassCastException} at runtime.</p>
-     *
-     * <p>This variant uses {@link net.fabricmc.fabric.api.event.Event#DEFAULT_PHASE} as the
-     * registration phase.</p>
-     *
-     * @param listener the object to register; must implement each event's type parameter {@code T}
-     * @param events   the events to register to
-     * @param <T>      the type of the event listener; each {@code event} expects this type
-     */
+    /// Registers the given listener to one or more events using the default phase.
+    ///
+    /// The `listener` object must implement the interface or class represented
+    /// by each `event`'s type parameter `T`. Passing an incompatible object
+    /// will throw a [ClassCastException] at runtime.
+    ///
+    /// This variant uses [net.fabricmc.fabric.api.event.Event#DEFAULT_PHASE] as the
+    /// registration phase.
+    ///
+    /// @param listener the object to register; must implement each event's type parameter `T`
+    /// @param events   the events to register to
+    /// @param <T>      the type of the event listener; each `event` expects this type
     @SafeVarargs
     public static <T> void register(@NotNull Object listener, Event<? extends T> @NotNull ... events) {
         register(DEFAULT_PHASE, listener, events);
     }
 
-    /**
-     * Registers the given listener to one or more events with a specified phase.
-     *
-     * <p>The {@code listener} object must implement the interface or class represented
-     * by each {@code event}'s type parameter {@code T}. Passing an incompatible object
-     * will throw a {@link ClassCastException} at runtime.</p>
-     *
-     * @param phase    the registration phase to use
-     * @param listener the object to register; must implement each event's type parameter {@code T}
-     * @param events   the events to register to
-     * @param <T>      the type of the event listener; each {@code event} expects this type
-     */
+    /// Registers the given listener to one or more events with a specified phase.
+    ///
+    /// The `listener` object must implement the interface or class represented
+    /// by each `event`'s type parameter `T`. Passing an incompatible object
+    /// will throw a [ClassCastException] at runtime.
+    ///
+    /// @param phase    the registration phase to use
+    /// @param listener the object to register; must implement each event's type parameter `T`
+    /// @param events   the events to register to
+    /// @param <T>      the type of the event listener; each `event` expects this type
     @SuppressWarnings("unchecked")
     @SafeVarargs
     public static <T> void register(@NotNull Identifier phase, @NotNull Object listener, Event<? extends T> @NotNull ... events) {
@@ -101,22 +95,16 @@ public final class ServerEvents {
     }
 
     public static final class Player {
-        /**
-         * @see ServerPlayerEvents#COPY_FROM
-         */
+        /// @see ServerPlayerEvents#COPY_FROM
         @FabricAPI
         public static final Event<ServerPlayerEvents.CopyFrom> COPY_FROM = ServerPlayerEvents.COPY_FROM;
-        /**
-         * @see ServerPlayerEvents#AFTER_RESPAWN
-         */
+        /// @see ServerPlayerEvents#AFTER_RESPAWN
         @FabricAPI
         public static final Event<ServerPlayerEvents.AfterRespawn> AFTER_RESPAWN = ServerPlayerEvents.AFTER_RESPAWN;
-        /**
-         * An event that can be used to provide the player's join message.
-         *
-         * @since 1.0.5
-         * @deprecated Moved to {@link ServerEvents.Player.Join#MODIFY_MESSAGE}.
-         */
+        /// An event that can be used to provide the player's join message.
+        ///
+        /// @since 1.0.5
+        /// @deprecated Moved to [ServerEvents.Player.Join#MODIFY_MESSAGE].
         @Deprecated
         public static final Event<ServerEvents.Player.ModifyJoinMessage> MODIFY_JOIN_MESSAGE = EventFactory.createArrayBacked(ServerEvents.Player.ModifyJoinMessage.class, callbacks -> (player, message) -> {
             for (ServerEvents.Player.ModifyJoinMessage callback : callbacks) {
@@ -124,12 +112,10 @@ public final class ServerEvents {
             }
             return message;
         });
-        /**
-         * An event that can be used to provide the player's leave message.
-         *
-         * @since 1.0.5
-         * @deprecated Moved to {@link ServerEvents.Player.Leave#MODIFY_MESSAGE}.
-         */
+        /// An event that can be used to provide the player's leave message.
+        ///
+        /// @since 1.0.5
+        /// @deprecated Moved to [ServerEvents.Player.Leave#MODIFY_MESSAGE].
         @Deprecated
         public static final Event<ServerEvents.Player.ModifyLeaveMessage> MODIFY_LEAVE_MESSAGE = EventFactory.createArrayBacked(ServerEvents.Player.ModifyLeaveMessage.class, callbacks -> (player, message) -> {
             for (ServerEvents.Player.ModifyLeaveMessage callback : callbacks) {
@@ -137,9 +123,7 @@ public final class ServerEvents {
             }
             return message;
         });
-        /**
-         * An event that allows the player to drop the selected item.
-         */
+        /// An event that allows the player to drop the selected item.
         public static final Event<ServerEvents.Player.AllowDropSelectedItem> ALLOW_DROP_SELECTED_ITEM = EventFactory.createArrayBacked(ServerEvents.Player.AllowDropSelectedItem.class, callbacks -> (player, all) -> {
             for (ServerEvents.Player.AllowDropSelectedItem callback : callbacks) {
                 if (!callback.allowDropSelectedItem(player, all)) {
@@ -152,65 +136,51 @@ public final class ServerEvents {
         private Player() {
         }
 
-        /**
-         * @since 1.0.5
-         * @deprecated Moved to {@link ServerEvents.Player.Join.ModifyMessage}.
-         */
+        /// @since 1.0.5
+        /// @deprecated Moved to [ServerEvents.Player.Join.ModifyMessage].
         @Deprecated
         @FunctionalInterface
         public interface ModifyJoinMessage {
-            /**
-             * Modifies or provides a message for a player joined.
-             *
-             * @param player  the player
-             * @param message the join message
-             * @return the new join message
-             */
+            /// Modifies or provides a message for a player joined.
+            ///
+            /// @param player  the player
+            /// @param message the join message
+            /// @return the new join message
             @NotNull Component modifyJoinMessage(@NotNull ServerPlayer player, @NotNull Component message);
         }
 
-        /**
-         * @since 1.0.5
-         * @deprecated Moved to {@link ServerEvents.Player.Leave.ModifyMessage}.
-         */
+        /// @since 1.0.5
+        /// @deprecated Moved to [ServerEvents.Player.Leave.ModifyMessage].
         @Deprecated
         @FunctionalInterface
         public interface ModifyLeaveMessage {
-            /**
-             * Modifies or provides a message for a player left.
-             *
-             * @param player  the player
-             * @param message the leaving message
-             * @return the new leave message
-             */
+            /// Modifies or provides a message for a player left.
+            ///
+            /// @param player  the player
+            /// @param message the leaving message
+            /// @return the new leave message
             @NotNull Component modifyLeaveMessage(@NotNull ServerPlayer player, @NotNull Component message);
         }
 
         @FunctionalInterface
         public interface AllowDropSelectedItem {
-            /**
-             * Called when the player drops the selected item.
-             *
-             * @param player the player
-             * @param all    whether to drop all items
-             * @return {@code true} if should be allowed, otherwise {@code false}
-             */
+            /// Called when the player drops the selected item.
+            ///
+            /// @param player the player
+            /// @param all    whether to drop all items
+            /// @return `true` if should be allowed, otherwise `false`
             boolean allowDropSelectedItem(@NotNull ServerPlayer player, boolean all);
         }
 
         public static final class Join {
-            /**
-             * An event that can be used to provide the player's join message.
-             */
+            /// An event that can be used to provide the player's join message.
             public static final Event<ServerEvents.Player.Join.ModifyMessage> MODIFY_MESSAGE = EventFactory.createArrayBacked(ServerEvents.Player.Join.ModifyMessage.class, callbacks -> (player, message) -> {
                 for (ServerEvents.Player.Join.ModifyMessage callback : callbacks) {
                     message = callback.modifyJoinMessage(player, message);
                 }
                 return message;
             });
-            /**
-             * An event that allows broadcast the player's join message.
-             */
+            /// An event that allows broadcast the player's join message.
             public static final Event<ServerEvents.Player.Join.AllowMessage> ALLOW_MESSAGE = EventFactory.createArrayBacked(ServerEvents.Player.Join.AllowMessage.class, callbacks -> (player, message) -> {
                 for (ServerEvents.Player.Join.AllowMessage callback : callbacks) {
                     if (!callback.allowJoinMessage(player, message)) {
@@ -225,42 +195,34 @@ public final class ServerEvents {
 
             @FunctionalInterface
             public interface ModifyMessage {
-                /**
-                 * Modifies or provides a message for a player joined.
-                 *
-                 * @param player  the player
-                 * @param message the join message
-                 * @return the new join message
-                 */
+                /// Modifies or provides a message for a player joined.
+                ///
+                /// @param player  the player
+                /// @param message the join message
+                /// @return the new join message
                 @NotNull Component modifyJoinMessage(@NotNull ServerPlayer player, @NotNull Component message);
             }
 
             @FunctionalInterface
             public interface AllowMessage {
-                /**
-                 * Called when a player joins a server
-                 *
-                 * @param player  the player
-                 * @param message the join reason
-                 * @return {@code true} if should broadcast the message, otherwise {@code false}
-                 */
+                /// Called when a player joins a server
+                ///
+                /// @param player  the player
+                /// @param message the join reason
+                /// @return `true` if should broadcast the message, otherwise `false`
                 boolean allowJoinMessage(@NotNull ServerPlayer player, @NotNull Component message);
             }
         }
 
         public static final class Leave {
-            /**
-             * An event that can be used to provide the player's leave message.
-             */
+            /// An event that can be used to provide the player's leave message.
             public static final Event<ServerEvents.Player.Leave.ModifyMessage> MODIFY_MESSAGE = EventFactory.createArrayBacked(ServerEvents.Player.Leave.ModifyMessage.class, callbacks -> (player, message) -> {
                 for (ServerEvents.Player.Leave.ModifyMessage callback : callbacks) {
                     message = callback.modifyLeaveMessage(player, message);
                 }
                 return message;
             });
-            /**
-             * An event that allows broadcast the player's leave message.
-             */
+            /// An event that allows broadcast the player's leave message.
             public static final Event<ServerEvents.Player.Leave.AllowMessage> ALLOW_MESSAGE = EventFactory.createArrayBacked(ServerEvents.Player.Leave.AllowMessage.class, callbacks -> (player, message) -> {
                 for (ServerEvents.Player.Leave.AllowMessage callback : callbacks) {
                     if (!callback.allowLeaveMessage(player, message)) {
@@ -275,42 +237,34 @@ public final class ServerEvents {
 
             @FunctionalInterface
             public interface ModifyMessage {
-                /**
-                 * Modifies or provides a message for a player left.
-                 *
-                 * @param player  the player
-                 * @param message the leaving message
-                 * @return the new leave message
-                 */
+                /// Modifies or provides a message for a player left.
+                ///
+                /// @param player  the player
+                /// @param message the leaving message
+                /// @return the new leave message
                 @NotNull Component modifyLeaveMessage(@NotNull ServerPlayer player, @NotNull Component message);
             }
 
             @FunctionalInterface
             public interface AllowMessage {
-                /**
-                 * Called when a player left a server
-                 *
-                 * @param player  the player
-                 * @param message the leave reason
-                 * @return {@code true} if should broadcast the message, otherwise {@code false}
-                 */
+                /// Called when a player left a server
+                ///
+                /// @param player  the player
+                /// @param message the leave reason
+                /// @return `true` if should broadcast the message, otherwise `false`
                 boolean allowLeaveMessage(@NotNull ServerPlayer player, @NotNull Component message);
             }
         }
 
         public static final class Kick {
-            /**
-             * An event that can be used to provide the player's kick reason.
-             */
+            /// An event that can be used to provide the player's kick reason.
             public static final Event<ServerEvents.Player.Kick.ModifyReason> MODIFY_REASON = EventFactory.createArrayBacked(ServerEvents.Player.Kick.ModifyReason.class, callbacks -> (player, message) -> {
                 for (ServerEvents.Player.Kick.ModifyReason callback : callbacks) {
                     message = callback.modifyKickReason(player, message);
                 }
                 return message;
             });
-            /**
-             * An event that allows the player should be kicked.
-             */
+            /// An event that allows the player should be kicked.
             public static final Event<ServerEvents.Player.Kick.Allow> ALLOW = EventFactory.createArrayBacked(ServerEvents.Player.Kick.Allow.class, callbacks -> (player, reason) -> {
                 for (ServerEvents.Player.Kick.Allow callback : callbacks) {
                     if (!callback.allowKick(player, reason)) {
@@ -325,25 +279,21 @@ public final class ServerEvents {
 
             @FunctionalInterface
             public interface ModifyReason {
-                /**
-                 * Modifies or provides a reason for a player kicked.
-                 *
-                 * @param player the player
-                 * @param reason the kick reason
-                 * @return the new kick reason
-                 */
+                /// Modifies or provides a reason for a player kicked.
+                ///
+                /// @param player the player
+                /// @param reason the kick reason
+                /// @return the new kick reason
                 @NotNull Component modifyKickReason(@NotNull ServerPlayer player, @NotNull Component reason);
             }
 
             @FunctionalInterface
             public interface Allow {
-                /**
-                 * Called when a player kicks a server
-                 *
-                 * @param player the player
-                 * @param reason the kick reason
-                 * @return {@code true} if the player should be kicked, otherwise {@code false}
-                 */
+                /// Called when a player kicks a server
+                ///
+                /// @param player the player
+                /// @param reason the kick reason
+                /// @return `true` if the player should be kicked, otherwise `false`
                 boolean allowKick(@NotNull ServerPlayer player, @NotNull Component reason);
             }
         }
@@ -353,19 +303,13 @@ public final class ServerEvents {
             }
 
             public static final class Use {
-                /**
-                 * @see UseBlockCallback#EVENT
-                 */
+                /// @see UseBlockCallback#EVENT
                 @FabricAPI
                 public static final Event<UseBlockCallback> BLOCK = UseBlockCallback.EVENT;
-                /**
-                 * @see UseEntityCallback#EVENT
-                 */
+                /// @see UseEntityCallback#EVENT
                 @FabricAPI
                 public static final Event<UseEntityCallback> ENTITY = UseEntityCallback.EVENT;
-                /**
-                 * @see UseItemCallback#EVENT
-                 */
+                /// @see UseItemCallback#EVENT
                 @FabricAPI
                 public static final Event<UseItemCallback> ITEM = UseItemCallback.EVENT;
 
@@ -374,14 +318,10 @@ public final class ServerEvents {
             }
 
             public static final class Attack {
-                /**
-                 * @see AttackBlockCallback#EVENT
-                 */
+                /// @see AttackBlockCallback#EVENT
                 @FabricAPI
                 public static final Event<AttackBlockCallback> BLOCK = AttackBlockCallback.EVENT;
-                /**
-                 * @see AttackEntityCallback#EVENT
-                 */
+                /// @see AttackEntityCallback#EVENT
                 @FabricAPI
                 public static final Event<AttackEntityCallback> ENTITY = AttackEntityCallback.EVENT;
 
@@ -390,19 +330,13 @@ public final class ServerEvents {
             }
 
             public static final class Break {
-                /**
-                 * @see PlayerBlockBreakEvents#BEFORE
-                 */
+                /// @see PlayerBlockBreakEvents#BEFORE
                 @FabricAPI
                 public static final Event<PlayerBlockBreakEvents.Before> BEFORE = PlayerBlockBreakEvents.BEFORE;
-                /**
-                 * @see PlayerBlockBreakEvents#AFTER
-                 */
+                /// @see PlayerBlockBreakEvents#AFTER
                 @FabricAPI
                 public static final Event<PlayerBlockBreakEvents.After> AFTER = PlayerBlockBreakEvents.AFTER;
-                /**
-                 * @see PlayerBlockBreakEvents#CANCELED
-                 */
+                /// @see PlayerBlockBreakEvents#CANCELED
                 @FabricAPI
                 public static final Event<PlayerBlockBreakEvents.Canceled> CANCELED = PlayerBlockBreakEvents.CANCELED;
 
@@ -411,14 +345,10 @@ public final class ServerEvents {
             }
 
             public static final class Pick {
-                /**
-                 * @see PlayerPickItemEvents#BLOCK
-                 */
+                /// @see PlayerPickItemEvents#BLOCK
                 @FabricAPI
                 public static final Event<PlayerPickItemEvents.PickItemFromBlock> BLOCK = PlayerPickItemEvents.BLOCK;
-                /**
-                 * @see PlayerPickItemEvents#ENTITY
-                 */
+                /// @see PlayerPickItemEvents#ENTITY
                 @FabricAPI
                 public static final Event<PlayerPickItemEvents.PickItemFromEntity> ENTITY = PlayerPickItemEvents.ENTITY;
 
@@ -429,9 +359,7 @@ public final class ServerEvents {
     }
 
     public static final class Item {
-        /**
-         * @see DefaultItemComponentEvents#MODIFY
-         */
+        /// @see DefaultItemComponentEvents#MODIFY
         @FabricAPI
         public static final Event<DefaultItemComponentEvents.ModifyCallback> DEFAULT_COMPONENT_MODIFY = DefaultItemComponentEvents.MODIFY;
 
@@ -439,14 +367,10 @@ public final class ServerEvents {
         }
 
         public static final class Enchanting {
-            /**
-             * @see EnchantmentEvents#ALLOW_ENCHANTING
-             */
+            /// @see EnchantmentEvents#ALLOW_ENCHANTING
             @FabricAPI
             public static final Event<EnchantmentEvents.AllowEnchanting> ALLOW = EnchantmentEvents.ALLOW_ENCHANTING;
-            /**
-             * @see EnchantmentEvents#MODIFY
-             */
+            /// @see EnchantmentEvents#MODIFY
             @FabricAPI
             public static final Event<EnchantmentEvents.Modify> MODIFY = EnchantmentEvents.MODIFY;
 
@@ -464,19 +388,13 @@ public final class ServerEvents {
             }
 
             public static final class Configuration {
-                /**
-                 * @see ServerConfigurationConnectionEvents#BEFORE_CONFIGURE
-                 */
+                /// @see ServerConfigurationConnectionEvents#BEFORE_CONFIGURE
                 @FabricAPI
                 public static final Event<ServerConfigurationConnectionEvents.Configure> BEFORE = ServerConfigurationConnectionEvents.BEFORE_CONFIGURE;
-                /**
-                 * @see ServerConfigurationConnectionEvents#CONFIGURE
-                 */
+                /// @see ServerConfigurationConnectionEvents#CONFIGURE
                 @FabricAPI
                 public static final Event<ServerConfigurationConnectionEvents.Configure> CONFIGURE = ServerConfigurationConnectionEvents.CONFIGURE;
-                /**
-                 * @see ServerConfigurationConnectionEvents#DISCONNECT
-                 */
+                /// @see ServerConfigurationConnectionEvents#DISCONNECT
                 @FabricAPI
                 public static final Event<ServerConfigurationConnectionEvents.Disconnect> DISCONNECT = ServerConfigurationConnectionEvents.DISCONNECT;
 
@@ -485,19 +403,13 @@ public final class ServerEvents {
             }
 
             public static final class Login {
-                /**
-                 * @see ServerLoginConnectionEvents#INIT
-                 */
+                /// @see ServerLoginConnectionEvents#INIT
                 @FabricAPI
                 public static final Event<ServerLoginConnectionEvents.Init> INIT = ServerLoginConnectionEvents.INIT;
-                /**
-                 * @see ServerLoginConnectionEvents#QUERY_START
-                 */
+                /// @see ServerLoginConnectionEvents#QUERY_START
                 @FabricAPI
                 public static final Event<ServerLoginConnectionEvents.QueryStart> QUERY_START = ServerLoginConnectionEvents.QUERY_START;
-                /**
-                 * @see ServerLoginConnectionEvents#DISCONNECT
-                 */
+                /// @see ServerLoginConnectionEvents#DISCONNECT
                 @FabricAPI
                 public static final Event<ServerLoginConnectionEvents.Disconnect> DISCONNECT = ServerLoginConnectionEvents.DISCONNECT;
 
@@ -506,19 +418,13 @@ public final class ServerEvents {
             }
 
             public static final class Play {
-                /**
-                 * @see ServerPlayConnectionEvents#INIT
-                 */
+                /// @see ServerPlayConnectionEvents#INIT
                 @FabricAPI
                 public static final Event<ServerPlayConnectionEvents.Init> INIT = ServerPlayConnectionEvents.INIT;
-                /**
-                 * @see ServerPlayConnectionEvents#JOIN
-                 */
+                /// @see ServerPlayConnectionEvents#JOIN
                 @FabricAPI
                 public static final Event<ServerPlayConnectionEvents.Join> JOIN = ServerPlayConnectionEvents.JOIN;
-                /**
-                 * @see ServerPlayConnectionEvents#DISCONNECT
-                 */
+                /// @see ServerPlayConnectionEvents#DISCONNECT
                 @FabricAPI
                 public static final Event<ServerPlayConnectionEvents.Disconnect> DISCONNECT = ServerPlayConnectionEvents.DISCONNECT;
 
@@ -528,18 +434,14 @@ public final class ServerEvents {
         }
 
         public static final class Receive {
-            /**
-             * An event that can be used to modify the packet being received.
-             */
+            /// An event that can be used to modify the packet being received.
             public static final Event<ServerEvents.Connection.Receive.Modify> MODIFY = EventFactory.createArrayBacked(ServerEvents.Connection.Receive.Modify.class, callbacks -> (packetListener, packet) -> {
                 for (ServerEvents.Connection.Receive.Modify callback : callbacks) {
                     packet = callback.modifyReceive(packetListener, packet);
                 }
                 return packet;
             });
-            /**
-             * An event that determines whether a packet should be received.
-             */
+            /// An event that determines whether a packet should be received.
             public static final Event<ServerEvents.Connection.Receive.Allow> ALLOW = EventFactory.createArrayBacked(ServerEvents.Connection.Receive.Allow.class, callbacks -> (packetListener, packet) -> {
                 for (ServerEvents.Connection.Receive.Allow callback : callbacks) {
                     if (!callback.allowReceive(packetListener, packet)) {
@@ -554,42 +456,34 @@ public final class ServerEvents {
 
             @FunctionalInterface
             public interface Modify {
-                /**
-                 * Modifies or provides a packet for receiving.
-                 *
-                 * @param packetListener the packet listener
-                 * @param packet         the packet being received
-                 * @return the modified packet
-                 */
+                /// Modifies or provides a packet for receiving.
+                ///
+                /// @param packetListener the packet listener
+                /// @param packet         the packet being received
+                /// @return the modified packet
                 @NotNull Packet<?> modifyReceive(@NotNull PacketListener packetListener, @NotNull Packet<?> packet);
             }
 
             @FunctionalInterface
             public interface Allow {
-                /**
-                 * Called when the server receives a packet.
-                 *
-                 * @param packetListener the packet listener
-                 * @param packet         the packet being received
-                 * @return {@code true} if the packet should be received, otherwise {@code false}
-                 */
+                /// Called when the server receives a packet.
+                ///
+                /// @param packetListener the packet listener
+                /// @param packet         the packet being received
+                /// @return `true` if the packet should be received, otherwise `false`
                 boolean allowReceive(@NotNull PacketListener packetListener, @NotNull Packet<?> packet);
             }
         }
 
         public static final class Send {
-            /**
-             * An event that can be used to modify the packet being sent.
-             */
+            /// An event that can be used to modify the packet being sent.
             public static final Event<ServerEvents.Connection.Send.Modify> MODIFY = EventFactory.createArrayBacked(ServerEvents.Connection.Send.Modify.class, callbacks -> (packetListener, packet) -> {
                 for (ServerEvents.Connection.Send.Modify callback : callbacks) {
                     packet = callback.modifySend(packetListener, packet);
                 }
                 return packet;
             });
-            /**
-             * An event that determines whether a packet should be sent.
-             */
+            /// An event that determines whether a packet should be sent.
             public static final Event<ServerEvents.Connection.Send.Allow> ALLOW = EventFactory.createArrayBacked(ServerEvents.Connection.Send.Allow.class, callbacks -> (packetListener, packet) -> {
                 for (ServerEvents.Connection.Send.Allow callback : callbacks) {
                     if (!callback.allowSend(packetListener, packet)) {
@@ -604,34 +498,28 @@ public final class ServerEvents {
 
             @FunctionalInterface
             public interface Modify {
-                /**
-                 * Modifies or provides a packet for sending.
-                 *
-                 * @param packetListener the packet listener may be {@code null}
-                 * @param packet         the packet being sent
-                 * @return the modified packet
-                 */
+                /// Modifies or provides a packet for sending.
+                ///
+                /// @param packetListener the packet listener may be `null`
+                /// @param packet         the packet being sent
+                /// @return the modified packet
                 @NotNull Packet<?> modifySend(@Nullable PacketListener packetListener, @NotNull Packet<?> packet);
             }
 
             @FunctionalInterface
             public interface Allow {
-                /**
-                 * Called when a packet is sent by the server.
-                 *
-                 * @param packetListener the packet listener may be {@code null}
-                 * @param packet         the packet being sent
-                 * @return {@code true} if the packet should be sent, otherwise {@code false}
-                 */
+                /// Called when a packet is sent by the server.
+                ///
+                /// @param packetListener the packet listener may be `null`
+                /// @param packet         the packet being sent
+                /// @return `true` if the packet should be sent, otherwise `false`
                 boolean allowSend(@Nullable PacketListener packetListener, @NotNull Packet<?> packet);
             }
         }
     }
 
     public static final class LivingEntity {
-        /**
-         * @see ServerLivingEntityEvents#MOB_CONVERSION
-         */
+        /// @see ServerLivingEntityEvents#MOB_CONVERSION
         @FabricAPI
         public static final Event<ServerLivingEntityEvents.MobConversion> MOB_CONVERSION = ServerLivingEntityEvents.MOB_CONVERSION;
 
@@ -639,14 +527,10 @@ public final class ServerEvents {
         }
 
         public static final class Damage {
-            /**
-             * @see ServerLivingEntityEvents#ALLOW_DAMAGE
-             */
+            /// @see ServerLivingEntityEvents#ALLOW_DAMAGE
             @FabricAPI
             public static final Event<ServerLivingEntityEvents.AllowDamage> ALLOW = ServerLivingEntityEvents.ALLOW_DAMAGE;
-            /**
-             * @see ServerLivingEntityEvents#AFTER_DAMAGE
-             */
+            /// @see ServerLivingEntityEvents#AFTER_DAMAGE
             @FabricAPI
             public static final Event<ServerLivingEntityEvents.AfterDamage> AFTER = ServerLivingEntityEvents.AFTER_DAMAGE;
 
@@ -655,14 +539,10 @@ public final class ServerEvents {
         }
 
         public static final class Death {
-            /**
-             * @see ServerLivingEntityEvents#ALLOW_DEATH
-             */
+            /// @see ServerLivingEntityEvents#ALLOW_DEATH
             @FabricAPI
             public static final Event<ServerLivingEntityEvents.AllowDeath> ALLOW = ServerLivingEntityEvents.ALLOW_DEATH;
-            /**
-             * @see ServerLivingEntityEvents#AFTER_DEATH
-             */
+            /// @see ServerLivingEntityEvents#AFTER_DEATH
             @FabricAPI
             public static final Event<ServerLivingEntityEvents.AfterDeath> AFTER = ServerLivingEntityEvents.AFTER_DEATH;
 
@@ -671,9 +551,7 @@ public final class ServerEvents {
         }
 
         public static final class Effect {
-            /**
-             * An event that determines whether an effect should be applied to an entity.
-             */
+            /// An event that determines whether an effect should be applied to an entity.
             public static final Event<ServerEvents.LivingEntity.Effect.Add> ADD = EventFactory.createArrayBacked(ServerEvents.LivingEntity.Effect.Add.class, callbacks -> (affectedEntity, effect, sourceEntity) -> {
                 for (ServerEvents.LivingEntity.Effect.Add callback : callbacks) {
                     if (!callback.addEffect(affectedEntity, effect, sourceEntity)) {
@@ -682,18 +560,14 @@ public final class ServerEvents {
                 }
                 return true;
             });
-            /**
-             * An event that allows modification of whether a new effect should override an existing effect.
-             */
+            /// An event that allows modification of whether a new effect should override an existing effect.
             public static final Event<ServerEvents.LivingEntity.Effect.Override> OVERRIDE = EventFactory.createArrayBacked(ServerEvents.LivingEntity.Effect.Override.class, callbacks -> (affectedEntity, oldEffect, newEffect, sourceEntity, override) -> {
                 for (ServerEvents.LivingEntity.Effect.Override callback : callbacks) {
                     override = callback.overrideEffect(affectedEntity, oldEffect, newEffect, sourceEntity, override);
                 }
                 return override;
             });
-            /**
-             * An event that determines whether an effect should be removed from an entity.
-             */
+            /// An event that determines whether an effect should be removed from an entity.
             public static final Event<ServerEvents.LivingEntity.Effect.Remove> REMOVE = EventFactory.createArrayBacked(ServerEvents.LivingEntity.Effect.Remove.class, callbacks -> (entity, effect) -> {
                 for (ServerEvents.LivingEntity.Effect.Remove callback : callbacks) {
                     if (!callback.removeEffect(entity, effect)) {
@@ -708,76 +582,60 @@ public final class ServerEvents {
 
             @FunctionalInterface
             public interface Add {
-                /**
-                 * Called when an effect is about to be applied to an entity.
-                 *
-                 * @param affectedEntity the entity to which the effect will be applied
-                 * @param effect         the effect instance to be applied
-                 * @param sourceEntity   the entity causing the effect, or {@code null} if no source is specified
-                 * @return {@code true} if the effect should be applied, otherwise {@code false}
-                 */
+                /// Called when an effect is about to be applied to an entity.
+                ///
+                /// @param affectedEntity the entity to which the effect will be applied
+                /// @param effect         the effect instance to be applied
+                /// @param sourceEntity   the entity causing the effect, or `null` if no source is specified
+                /// @return `true` if the effect should be applied, otherwise `false`
                 boolean addEffect(@NotNull net.minecraft.world.entity.LivingEntity affectedEntity, @NotNull MobEffectInstance effect, @Nullable net.minecraft.world.entity.Entity sourceEntity);
             }
 
             @FunctionalInterface
             public interface Override {
-                /**
-                 * Called to determine whether a new effect should override an existing effect.
-                 *
-                 * @param affectedEntity the entity with the existing effect
-                 * @param oldEffect      the current effect instance
-                 * @param newEffect      the new effect instance to apply
-                 * @param sourceEntity   the entity causing the effect, or {@code null} if no source is specified
-                 * @param override       whether the effect should be overridden
-                 * @return {@code true} if the effect should be overridden, otherwise {@code false}
-                 */
+                /// Called to determine whether a new effect should override an existing effect.
+                ///
+                /// @param affectedEntity the entity with the existing effect
+                /// @param oldEffect      the current effect instance
+                /// @param newEffect      the new effect instance to apply
+                /// @param sourceEntity   the entity causing the effect, or `null` if no source is specified
+                /// @param override       whether the effect should be overridden
+                /// @return `true` if the effect should be overridden, otherwise `false`
                 boolean overrideEffect(@NotNull net.minecraft.world.entity.LivingEntity affectedEntity, @NotNull MobEffectInstance oldEffect, @NotNull MobEffectInstance newEffect, @Nullable net.minecraft.world.entity.Entity sourceEntity, boolean override);
             }
 
             @FunctionalInterface
             public interface Remove {
-                /**
-                 * Called when an effect is about to be removed from an entity.
-                 *
-                 * @param entity the entity from which the effect will be removed
-                 * @param effect the effect instance to be removed, or {@code null} if no effect is specified
-                 * @return {@code true} if the effect should be removed, otherwise {@code false}
-                 */
+                /// Called when an effect is about to be removed from an entity.
+                ///
+                /// @param entity the entity from which the effect will be removed
+                /// @param effect the effect instance to be removed, or `null` if no effect is specified
+                /// @return `true` if the effect should be removed, otherwise `false`
                 boolean removeEffect(@NotNull net.minecraft.world.entity.LivingEntity entity, @Nullable MobEffectInstance effect);
             }
         }
     }
 
     public static final class Chunk {
-        /**
-         * @see ServerChunkEvents#CHUNK_LOAD
-         */
+        /// @see ServerChunkEvents#CHUNK_LOAD
         @FabricAPI
         public static final Event<ServerChunkEvents.Load> LOAD = ServerChunkEvents.CHUNK_LOAD;
-        /**
-         * @see ServerChunkEvents#CHUNK_GENERATE
-         * @since 2.1.0
-         * @deprecated Use {@link ServerEvents.Chunk#LOAD} directly instead
-         */
+        /// @see ServerChunkEvents#CHUNK_GENERATE
+        /// @since 2.1.0
+        /// @deprecated Use [ServerEvents.Chunk#LOAD] directly instead
         @Deprecated
         @FabricAPI
         public static final Event<ServerChunkEvents.Generate> GENERATE = ServerChunkEvents.CHUNK_GENERATE;
-        /**
-         * @see ServerChunkEvents#CHUNK_UNLOAD
-         */
+        /// @see ServerChunkEvents#CHUNK_UNLOAD
         @FabricAPI
         public static final Event<ServerChunkEvents.Unload> UNLOAD = ServerChunkEvents.CHUNK_UNLOAD;
-        /**
-         * @see ServerChunkEvents#FULL_CHUNK_STATUS_CHANGE
-         * @since 2.1.0
-         * @deprecated Moved to {@link ServerEvents.Chunk#LOAD}
-         */
+        /// @see ServerChunkEvents#FULL_CHUNK_STATUS_CHANGE
+        /// @since 2.1.0
+        /// @deprecated Moved to [ServerEvents.Chunk#LOAD]
         @Deprecated
         @FabricAPI
         public static final Event<ServerChunkEvents.FullChunkStatusChange> LEVEL_TYPE_CHANGE = ServerChunkEvents.FULL_CHUNK_STATUS_CHANGE;
-        /**
-         * @see ServerChunkEvents#FULL_CHUNK_STATUS_CHANGE
-         */
+        /// @see ServerChunkEvents#FULL_CHUNK_STATUS_CHANGE
         @FabricAPI
         public static final Event<ServerChunkEvents.FullChunkStatusChange> FULL_STATUS_CHANGE = ServerChunkEvents.FULL_CHUNK_STATUS_CHANGE;
 
@@ -786,24 +644,16 @@ public final class ServerEvents {
     }
 
     public static final class Entity {
-        /**
-         * @see ServerEntityEvents#ENTITY_LOAD
-         */
+        /// @see ServerEntityEvents#ENTITY_LOAD
         @FabricAPI
         public static final Event<ServerEntityEvents.Load> LOAD = ServerEntityEvents.ENTITY_LOAD;
-        /**
-         * @see ServerEntityEvents#ENTITY_UNLOAD
-         */
+        /// @see ServerEntityEvents#ENTITY_UNLOAD
         @FabricAPI
         public static final Event<ServerEntityEvents.Unload> UNLOAD = ServerEntityEvents.ENTITY_UNLOAD;
-        /**
-         * @see ServerEntityEvents#EQUIPMENT_CHANGE
-         */
+        /// @see ServerEntityEvents#EQUIPMENT_CHANGE
         @FabricAPI
         public static final Event<ServerEntityEvents.EquipmentChange> EQUIPMENT_CHANGE = ServerEntityEvents.EQUIPMENT_CHANGE;
-        /**
-         * @see ServerEntityCombatEvents#AFTER_KILLED_OTHER_ENTITY
-         */
+        /// @see ServerEntityCombatEvents#AFTER_KILLED_OTHER_ENTITY
         @FabricAPI
         public static final Event<ServerEntityCombatEvents.AfterKilledOtherEntity> AFTER_KILLED_OTHER_ENTITY = ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY;
 
@@ -811,14 +661,10 @@ public final class ServerEvents {
         }
 
         public static final class Elytra {
-            /**
-             * @see EntityElytraEvents#ALLOW
-             */
+            /// @see EntityElytraEvents#ALLOW
             @FabricAPI
             public static final Event<EntityElytraEvents.Allow> ALLOW = EntityElytraEvents.ALLOW;
-            /**
-             * @see EntityElytraEvents#CUSTOM
-             */
+            /// @see EntityElytraEvents#CUSTOM
             @FabricAPI
             public static final Event<EntityElytraEvents.Custom> CUSTOM = EntityElytraEvents.CUSTOM;
 
@@ -827,54 +673,34 @@ public final class ServerEvents {
         }
 
         public static final class Sleep {
-            /**
-             * @see EntitySleepEvents#ALLOW_SLEEPING
-             */
+            /// @see EntitySleepEvents#ALLOW_SLEEPING
             @FabricAPI
             public static final Event<EntitySleepEvents.AllowSleeping> ALLOW_SLEEPING = EntitySleepEvents.ALLOW_SLEEPING;
-            /**
-             * @see EntitySleepEvents#START_SLEEPING
-             */
+            /// @see EntitySleepEvents#START_SLEEPING
             @FabricAPI
             public static final Event<EntitySleepEvents.StartSleeping> START_SLEEPING = EntitySleepEvents.START_SLEEPING;
-            /**
-             * @see EntitySleepEvents#STOP_SLEEPING
-             */
+            /// @see EntitySleepEvents#STOP_SLEEPING
             @FabricAPI
             public static final Event<EntitySleepEvents.StopSleeping> STOP_SLEEPING = EntitySleepEvents.STOP_SLEEPING;
-            /**
-             * @see EntitySleepEvents#ALLOW_BED
-             */
+            /// @see EntitySleepEvents#ALLOW_BED
             @FabricAPI
             public static final Event<EntitySleepEvents.AllowBed> ALLOW_BED = EntitySleepEvents.ALLOW_BED;
-            /**
-             * @see EntitySleepEvents#ALLOW_NEARBY_MONSTERS
-             */
+            /// @see EntitySleepEvents#ALLOW_NEARBY_MONSTERS
             @FabricAPI
             public static final Event<EntitySleepEvents.AllowNearbyMonsters> ALLOW_NEARBY_MONSTERS = EntitySleepEvents.ALLOW_NEARBY_MONSTERS;
-            /**
-             * @see EntitySleepEvents#ALLOW_RESETTING_TIME
-             */
+            /// @see EntitySleepEvents#ALLOW_RESETTING_TIME
             @FabricAPI
             public static final Event<EntitySleepEvents.AllowResettingTime> ALLOW_RESETTING_TIME = EntitySleepEvents.ALLOW_RESETTING_TIME;
-            /**
-             * @see EntitySleepEvents#MODIFY_SLEEPING_DIRECTION
-             */
+            /// @see EntitySleepEvents#MODIFY_SLEEPING_DIRECTION
             @FabricAPI
             public static final Event<EntitySleepEvents.ModifySleepingDirection> MODIFY_SLEEPING_DIRECTION = EntitySleepEvents.MODIFY_SLEEPING_DIRECTION;
-            /**
-             * @see EntitySleepEvents#ALLOW_SETTING_SPAWN
-             */
+            /// @see EntitySleepEvents#ALLOW_SETTING_SPAWN
             @FabricAPI
             public static final Event<EntitySleepEvents.AllowSettingSpawn> ALLOW_SETTING_SPAWN = EntitySleepEvents.ALLOW_SETTING_SPAWN;
-            /**
-             * @see EntitySleepEvents#SET_BED_OCCUPATION_STATE
-             */
+            /// @see EntitySleepEvents#SET_BED_OCCUPATION_STATE
             @FabricAPI
             public static final Event<EntitySleepEvents.SetBedOccupationState> SET_BED_OCCUPATION_STATE = EntitySleepEvents.SET_BED_OCCUPATION_STATE;
-            /**
-             * @see EntitySleepEvents#MODIFY_WAKE_UP_POSITION
-             */
+            /// @see EntitySleepEvents#MODIFY_WAKE_UP_POSITION
             @FabricAPI
             public static final Event<EntitySleepEvents.ModifyWakeUpPosition> MODIFY_WAKE_UP_POSITION = EntitySleepEvents.MODIFY_WAKE_UP_POSITION;
 
@@ -883,14 +709,10 @@ public final class ServerEvents {
         }
 
         public static final class Tracking {
-            /**
-             * @see EntityTrackingEvents#START_TRACKING
-             */
+            /// @see EntityTrackingEvents#START_TRACKING
             @FabricAPI
             public static final Event<EntityTrackingEvents.StartTracking> START = EntityTrackingEvents.START_TRACKING;
-            /**
-             * @see EntityTrackingEvents#STOP_TRACKING
-             */
+            /// @see EntityTrackingEvents#STOP_TRACKING
             @FabricAPI
             public static final Event<EntityTrackingEvents.StopTracking> STOP = EntityTrackingEvents.STOP_TRACKING;
 
@@ -900,29 +722,19 @@ public final class ServerEvents {
     }
 
     public static final class Lifecycle {
-        /**
-         * @see ServerLifecycleEvents#SERVER_STARTING
-         */
+        /// @see ServerLifecycleEvents#SERVER_STARTING
         @FabricAPI
         public static final Event<ServerLifecycleEvents.ServerStarting> STARTING = ServerLifecycleEvents.SERVER_STARTING;
-        /**
-         * @see ServerLifecycleEvents#SERVER_STARTED
-         */
+        /// @see ServerLifecycleEvents#SERVER_STARTED
         @FabricAPI
         public static final Event<ServerLifecycleEvents.ServerStarted> STARTED = ServerLifecycleEvents.SERVER_STARTED;
-        /**
-         * @see ServerLifecycleEvents#SERVER_STOPPING
-         */
+        /// @see ServerLifecycleEvents#SERVER_STOPPING
         @FabricAPI
         public static final Event<ServerLifecycleEvents.ServerStopping> STOPPING = ServerLifecycleEvents.SERVER_STOPPING;
-        /**
-         * @see ServerLifecycleEvents#SERVER_STOPPED
-         */
+        /// @see ServerLifecycleEvents#SERVER_STOPPED
         @FabricAPI
         public static final Event<ServerLifecycleEvents.ServerStopped> STOPPED = ServerLifecycleEvents.SERVER_STOPPED;
-        /**
-         * @see CommonLifecycleEvents#TAGS_LOADED
-         */
+        /// @see CommonLifecycleEvents#TAGS_LOADED
         @FabricAPI
         public static final Event<CommonLifecycleEvents.TagsLoaded> TAGS_LOADED = CommonLifecycleEvents.TAGS_LOADED;
 
@@ -930,9 +742,7 @@ public final class ServerEvents {
         }
 
         public static final class DataPack {
-            /**
-             * @see ServerLifecycleEvents#SYNC_DATA_PACK_CONTENTS
-             */
+            /// @see ServerLifecycleEvents#SYNC_DATA_PACK_CONTENTS
             @FabricAPI
             public static final Event<ServerLifecycleEvents.SyncDataPackContents> SYNC_CONTENTS = ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS;
 
@@ -940,14 +750,10 @@ public final class ServerEvents {
             }
 
             public static final class Reload {
-                /**
-                 * @see ServerLifecycleEvents#START_DATA_PACK_RELOAD
-                 */
+                /// @see ServerLifecycleEvents#START_DATA_PACK_RELOAD
                 @FabricAPI
                 public static final Event<ServerLifecycleEvents.StartDataPackReload> START = ServerLifecycleEvents.START_DATA_PACK_RELOAD;
-                /**
-                 * @see ServerLifecycleEvents#END_DATA_PACK_RELOAD
-                 */
+                /// @see ServerLifecycleEvents#END_DATA_PACK_RELOAD
                 @FabricAPI
                 public static final Event<ServerLifecycleEvents.EndDataPackReload> END = ServerLifecycleEvents.END_DATA_PACK_RELOAD;
 
@@ -957,14 +763,10 @@ public final class ServerEvents {
         }
 
         public static final class Save {
-            /**
-             * @see ServerLifecycleEvents#BEFORE_SAVE
-             */
+            /// @see ServerLifecycleEvents#BEFORE_SAVE
             @FabricAPI
             public static final Event<ServerLifecycleEvents.BeforeSave> BEFORE = ServerLifecycleEvents.BEFORE_SAVE;
-            /**
-             * @see ServerLifecycleEvents#AFTER_SAVE
-             */
+            /// @see ServerLifecycleEvents#AFTER_SAVE
             @FabricAPI
             public static final Event<ServerLifecycleEvents.AfterSave> AFTER = ServerLifecycleEvents.AFTER_SAVE;
 
@@ -978,14 +780,10 @@ public final class ServerEvents {
         }
 
         public static final class Server {
-            /**
-             * @see ServerTickEvents#START_SERVER_TICK
-             */
+            /// @see ServerTickEvents#START_SERVER_TICK
             @FabricAPI
             public static final Event<ServerTickEvents.StartTick> START = ServerTickEvents.START_SERVER_TICK;
-            /**
-             * @see ServerTickEvents#END_SERVER_TICK
-             */
+            /// @see ServerTickEvents#END_SERVER_TICK
             @FabricAPI
             public static final Event<ServerTickEvents.EndTick> END = ServerTickEvents.END_SERVER_TICK;
 
@@ -993,10 +791,8 @@ public final class ServerEvents {
             }
         }
 
-        /**
-         * @deprecated Moved to {@link ServerEvents.Tick.Level}
-         * @since 2.1.0
-         */
+        /// @since 2.1.0
+        /// @deprecated Moved to [ServerEvents.Tick.Level]
         @Deprecated
         public static final class World {
             private World() {
@@ -1004,14 +800,10 @@ public final class ServerEvents {
         }
 
         public static final class Level {
-            /**
-             * @see ServerTickEvents#START_LEVEL_TICK
-             */
+            /// @see ServerTickEvents#START_LEVEL_TICK
             @FabricAPI
             public static final Event<ServerTickEvents.StartLevelTick> START = ServerTickEvents.START_LEVEL_TICK;
-            /**
-             * @see ServerTickEvents#END_LEVEL_TICK
-             */
+            /// @see ServerTickEvents#END_LEVEL_TICK
             @FabricAPI
             public static final Event<ServerTickEvents.EndLevelTick> END = ServerTickEvents.END_LEVEL_TICK;
 
@@ -1025,14 +817,10 @@ public final class ServerEvents {
         }
 
         public static final class Chat {
-            /**
-             * @see ServerMessageEvents#ALLOW_CHAT_MESSAGE
-             */
+            /// @see ServerMessageEvents#ALLOW_CHAT_MESSAGE
             @FabricAPI
             public static final Event<ServerMessageEvents.AllowChatMessage> ALLOW = ServerMessageEvents.ALLOW_CHAT_MESSAGE;
-            /**
-             * @see ServerMessageEvents#CHAT_MESSAGE
-             */
+            /// @see ServerMessageEvents#CHAT_MESSAGE
             @FabricAPI
             public static final Event<ServerMessageEvents.ChatMessage> ON = ServerMessageEvents.CHAT_MESSAGE;
 
@@ -1041,14 +829,10 @@ public final class ServerEvents {
         }
 
         public static final class Game {
-            /**
-             * @see ServerMessageEvents#ALLOW_GAME_MESSAGE
-             */
+            /// @see ServerMessageEvents#ALLOW_GAME_MESSAGE
             @FabricAPI
             public static final Event<ServerMessageEvents.AllowGameMessage> ALLOW = ServerMessageEvents.ALLOW_GAME_MESSAGE;
-            /**
-             * @see ServerMessageEvents#GAME_MESSAGE
-             */
+            /// @see ServerMessageEvents#GAME_MESSAGE
             @FabricAPI
             public static final Event<ServerMessageEvents.GameMessage> ON = ServerMessageEvents.GAME_MESSAGE;
 
@@ -1057,14 +841,10 @@ public final class ServerEvents {
         }
 
         public static final class Command {
-            /**
-             * @see ServerMessageEvents#ALLOW_COMMAND_MESSAGE
-             */
+            /// @see ServerMessageEvents#ALLOW_COMMAND_MESSAGE
             @FabricAPI
             public static final Event<ServerMessageEvents.AllowCommandMessage> ALLOW = ServerMessageEvents.ALLOW_COMMAND_MESSAGE;
-            /**
-             * @see ServerMessageEvents#COMMAND_MESSAGE
-             */
+            /// @see ServerMessageEvents#COMMAND_MESSAGE
             @FabricAPI
             public static final Event<ServerMessageEvents.CommandMessage> ON = ServerMessageEvents.COMMAND_MESSAGE;
 
@@ -1073,10 +853,8 @@ public final class ServerEvents {
         }
     }
 
-    /**
-     * @deprecated Moved to {@link ServerEvents.Level}
-     * @since 2.1.0
-     */
+    /// @since 2.1.0
+    /// @deprecated Moved to [ServerEvents.Level]
     @Deprecated
     public static final class World {
         private World() {
@@ -1084,14 +862,10 @@ public final class ServerEvents {
     }
 
     public static final class Level {
-        /**
-         * @see ServerLevelEvents#LOAD
-         */
+        /// @see ServerLevelEvents#LOAD
         @FabricAPI
         public static final Event<ServerLevelEvents.Load> LOAD = ServerLevelEvents.LOAD;
-        /**
-         * @see ServerLevelEvents#UNLOAD
-         */
+        /// @see ServerLevelEvents#UNLOAD
         @FabricAPI
         public static final Event<ServerLevelEvents.Unload> UNLOAD = ServerLevelEvents.UNLOAD;
 
@@ -1099,14 +873,10 @@ public final class ServerEvents {
         }
 
         public static final class Change {
-            /**
-             * @see ServerEntityLevelChangeEvents#AFTER_ENTITY_CHANGE_LEVEL
-             */
+            /// @see ServerEntityLevelChangeEvents#AFTER_ENTITY_CHANGE_LEVEL
             @FabricAPI
             public static final Event<ServerEntityLevelChangeEvents.AfterEntityChange> ENTITY = ServerEntityLevelChangeEvents.AFTER_ENTITY_CHANGE_LEVEL;
-            /**
-             * @see ServerEntityLevelChangeEvents#AFTER_PLAYER_CHANGE_LEVEL
-             */
+            /// @see ServerEntityLevelChangeEvents#AFTER_PLAYER_CHANGE_LEVEL
             @FabricAPI
             public static final Event<ServerEntityLevelChangeEvents.AfterPlayerChange> PLAYER = ServerEntityLevelChangeEvents.AFTER_PLAYER_CHANGE_LEVEL;
 
@@ -1116,14 +886,10 @@ public final class ServerEvents {
     }
 
     public static final class BlockEntity {
-        /**
-         * @see ServerBlockEntityEvents#BLOCK_ENTITY_LOAD
-         */
+        /// @see ServerBlockEntityEvents#BLOCK_ENTITY_LOAD
         @FabricAPI
         public static final Event<ServerBlockEntityEvents.Load> LOAD = ServerBlockEntityEvents.BLOCK_ENTITY_LOAD;
-        /**
-         * @see ServerBlockEntityEvents#BLOCK_ENTITY_UNLOAD
-         */
+        /// @see ServerBlockEntityEvents#BLOCK_ENTITY_UNLOAD
         @FabricAPI
         public static final Event<ServerBlockEntityEvents.Unload> UNLOAD = ServerBlockEntityEvents.BLOCK_ENTITY_UNLOAD;
 
@@ -1132,19 +898,13 @@ public final class ServerEvents {
     }
 
     public static final class LootTable {
-        /**
-         * @see LootTableEvents#REPLACE
-         */
+        /// @see LootTableEvents#REPLACE
         @FabricAPI
         public static final Event<LootTableEvents.Replace> REPLACE = LootTableEvents.REPLACE;
-        /**
-         * @see LootTableEvents#MODIFY
-         */
+        /// @see LootTableEvents#MODIFY
         @FabricAPI
         public static final Event<LootTableEvents.Modify> MODIFY = LootTableEvents.MODIFY;
-        /**
-         * @see LootTableEvents#ALL_LOADED
-         */
+        /// @see LootTableEvents#ALL_LOADED
         @FabricAPI
         public static final Event<LootTableEvents.Loaded> ALL_LOADED = LootTableEvents.ALL_LOADED;
 

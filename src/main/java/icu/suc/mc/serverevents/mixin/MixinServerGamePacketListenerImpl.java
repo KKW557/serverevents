@@ -39,17 +39,13 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public abstract class MixinServerGamePacketListenerImpl {
     @Shadow public ServerPlayer player;
 
-    /**
-     * @see ServerEvents.Player.Leave#MODIFY_MESSAGE
-     */
+    /// @see ServerEvents.Player.Leave#MODIFY_MESSAGE
     @ModifyArg(method = "removePlayerFromWorld", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/players/PlayerList;broadcastSystemMessage(Lnet/minecraft/network/chat/Component;Z)V"), index = 0)
     private @NotNull Component serverevents$Player$Leave$MODIFY_MESSAGE(Component message) {
         return ServerEvents.Player.Leave.MODIFY_MESSAGE.invoker().modifyLeaveMessage(player, message);
     }
 
-    /**
-     * @see ServerEvents.Player.Leave#ALLOW_MESSAGE
-     */
+    /// @see ServerEvents.Player.Leave#ALLOW_MESSAGE
     @Redirect(method = "removePlayerFromWorld", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/players/PlayerList;broadcastSystemMessage(Lnet/minecraft/network/chat/Component;Z)V"))
     private void serverevents$Player$Leave$ALLOW_MESSAGE(PlayerList instance, Component message, boolean overlay) {
         boolean bool = ServerEvents.Player.Leave.ALLOW_MESSAGE.invoker().allowLeaveMessage(player, message);
@@ -58,9 +54,7 @@ public abstract class MixinServerGamePacketListenerImpl {
         }
     }
 
-    /**
-     * @see ServerEvents.Player#ALLOW_DROP_SELECTED_ITEM
-     */
+    /// @see ServerEvents.Player#ALLOW_DROP_SELECTED_ITEM
     @Redirect(method = "handlePlayerAction", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;drop(Z)V"))
     private void serverevents$Player$ALLOW_DROP_SELECTED_ITEM(ServerPlayer instance, boolean all) {
         boolean bool = ServerEvents.Player.ALLOW_DROP_SELECTED_ITEM.invoker().allowDropSelectedItem(player, all);
