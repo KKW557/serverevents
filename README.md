@@ -4,7 +4,7 @@
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/sucj/serverevents/build.yml)](https://github.com/sucj/serverevents/actions/workflows/build.yml)
 [![GitHub Release](https://img.shields.io/github/v/release/sucj/serverevents?include_prereleases)](https://github.com/sucj/serverevents/releases/latest)
 
-[![Modrinth Downloads](https://img.shields.io/modrinth/dt/serverevents?logo=modrinth)](https://modrinth.com/mod/serverevents)
+[![Modrinth Downloads](https://img.shields.io/modrinth/dt/serverevents?logo=modrinth)](https://modrinth.com/project/hykUQTdx)
 
 **Server Events** is a support library for Fabric server development, designed to enhance the Fabric API's limited event system. It offers a Bukkit-like event framework while adhering to Fabric's minimalist philosophy.
 
