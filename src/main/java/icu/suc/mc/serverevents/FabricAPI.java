@@ -40,7 +40,7 @@ import static java.lang.annotation.ElementType.FIELD;
  * @since 1.0.0
  */
 @Documented
-@Retention(RetentionPolicy.SOURCE)
+@Retention(RetentionPolicy.RUNTIME)
 @Target(value = FIELD)
 public @interface FabricAPI {
 }
