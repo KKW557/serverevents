@@ -37,7 +37,7 @@ import static java.lang.annotation.ElementType.FIELD;
 ///
 /// @since 1.0.0
 @Documented
-@Retention(RetentionPolicy.RUNTIME)
+@Retention(RetentionPolicy.SOURCE)
 @Target(value = FIELD)
 public @interface FabricAPI {
 }
