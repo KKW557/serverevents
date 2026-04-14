@@ -36,9 +36,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ServerCommonPacketListenerImpl.class)
 public abstract class MixinServerCommonPacketListenerImpl {
-    /**
-     * @see ServerEvents.Player.Kick#MODIFY_REASON
-     */
+    /// @see ServerEvents.Player.Kick#MODIFY_REASON
     @ModifyArg(method = "disconnect(Lnet/minecraft/network/chat/Component;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/DisconnectionDetails;<init>(Lnet/minecraft/network/chat/Component;)V"), index = 0)
     private Component serverevents$Player$Kick$MODIFY_REASON(Component component) {
         var self = (Object) this;
@@ -49,9 +47,7 @@ public abstract class MixinServerCommonPacketListenerImpl {
         return component;
     }
 
-    /**
-     * @see ServerEvents.Player.Kick#ALLOW
-     */
+    /// @see ServerEvents.Player.Kick#ALLOW
     @Inject(method = "disconnect(Lnet/minecraft/network/DisconnectionDetails;)V", at = @At("HEAD"), cancellable = true)
     private void serverevents$Player$Kick$ALLOW(DisconnectionDetails details, CallbackInfo ci) {
         var self = (Object) this;

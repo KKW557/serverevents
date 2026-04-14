@@ -30,15 +30,12 @@ import java.lang.annotation.Target;
 
 import static java.lang.annotation.ElementType.FIELD;
 
-/**
- * Indicates that a field wraps an event from the Fabric API.
- * <p>
- * This annotation is used to mark fields that serve as wrappers for events provided by the Fabric API.
- * It is retained only at the source level and can only be applied to fields.
- * </p>
- *
- * @since 1.0.0
- */
+/// Indicates that a field wraps an event from the Fabric API.
+///
+/// This annotation is used to mark fields that serve as wrappers for events provided by the Fabric API.
+/// It is retained only at the source level and can only be applied to fields.
+///
+/// @since 1.0.0
 @Documented
 @Retention(RetentionPolicy.SOURCE)
 @Target(value = FIELD)

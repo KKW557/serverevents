@@ -36,17 +36,13 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(PlayerList.class)
 public abstract class MixinPlayerList {
-    /**
-     * @see ServerEvents.Player.Join#MODIFY_MESSAGE
-     */
+    /// @see ServerEvents.Player.Join#MODIFY_MESSAGE
     @ModifyArg(method = "placeNewPlayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/players/PlayerList;broadcastSystemMessage(Lnet/minecraft/network/chat/Component;Z)V"), index = 0)
     private @NotNull Component serverevents$Player$Join$MODIFY_MESSAGE(Component component, @Local(argsOnly = true) ServerPlayer serverPlayer) {
         return ServerEvents.Player.Join.MODIFY_MESSAGE.invoker().modifyJoinMessage(serverPlayer, component);
     }
 
-    /**
-     * @see ServerEvents.Player.Join#ALLOW_MESSAGE
-     */
+    /// @see ServerEvents.Player.Join#ALLOW_MESSAGE
     @Redirect(method = "placeNewPlayer", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/players/PlayerList;broadcastSystemMessage(Lnet/minecraft/network/chat/Component;Z)V"))
     private void serverevents$Player$Join$ALLOW_MESSAGE(PlayerList instance, Component message, boolean overlay, @Local(argsOnly = true) ServerPlayer serverPlayer) {
         boolean bool = ServerEvents.Player.Join.ALLOW_MESSAGE.invoker().allowJoinMessage(serverPlayer, message);
