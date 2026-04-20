@@ -40,8 +40,6 @@ import org.jetbrains.annotations.ApiStatus;
 ///
 /// Outside of `ServerEvents.*`, these priorities do not have intrinsic
 /// meaning unless explicitly integrated into the event dispatching logic.
-///
-/// @since 2.1.0
 public final class ServerEventPriority {
     @ApiStatus.Internal
     public static final Identifier[] PRIORITIES = new Identifier[6];
