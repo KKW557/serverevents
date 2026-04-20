@@ -40,7 +40,7 @@ import org.jetbrains.annotations.NotNull;
 public interface Listener {
     /// Returns the phase in which the listener is interested.
     ///
-    /// @return the default phase [Event.DEFAULT_PHASE]
+    /// @return the default phase
     default @NotNull Identifier phase() {
         return Event.DEFAULT_PHASE;
     }
